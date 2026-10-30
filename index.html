@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Little Universe</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Poppins:wght@300;400;500&family=Great+Vibes&display=swap" rel="stylesheet">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #09070b;
+    color: #f5e9e9;
+    font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(circle at 20% 20%, #35152255, transparent 35%),
+      radial-gradient(circle at 80% 80%, #28153c55, transparent 35%),
+      linear-gradient(135deg, #080609, #160b13, #09070b);
+    z-index: -3;
+}
+
+.stars {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    background-image:
+      radial-gradient(1px 1px at 20% 30%, #ffffffaa 50%, transparent),
+      radial-gradient(1px 1px at 70% 20%, #ffffff88 50%, transparent),
+      radial-gradient(2px 2px at 40% 70%, #ffffff77 50%, transparent),
+      radial-gradient(1px 1px at 85% 65%, #ffffff99 50%, transparent),
+      radial-gradient(1px 1px at 10% 85%, #ffffff88 50%, transparent);
+    background-size: 300px 300px;
+    animation: starsMove 30s linear infinite;
+}
+
+@keyframes starsMove {
+    from { transform: translateY(0); }
+    to { transform: translateY(-300px); }
+}
+
+.page {
+    display: none;
+    min-height: 100vh;
+    padding: 35px 18px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    animation: fadeIn 1s ease;
+}
+
+.page.active {
+    display: flex;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.card {
+    width: 100%;
+    max-width: 760px;
+    padding: 38px 28px;
+    background: linear-gradient(145deg, #1b1119ee, #100d16ee);
+    border: 1px solid #8e526455;
+    border-radius: 18px;
+    box-shadow: 0 15px 60px #00000088;
+    backdrop-filter: blur(10px);
+}
+
+h1, h2, h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    color: #f3c9d5;
+}
+
+h1 {
+    font-size: clamp(36px, 8vw, 60px);
+    margin-bottom: 15px;
+}
+
+h2 {
+    font-size: clamp(29px, 6vw, 43px);
+    margin-bottom: 20px;
+}
+
+h3 {
+    font-size: 25px;
+    margin-bottom: 15px;
+}
+
+p {
+    color: #dfcbd3;
+    line-height: 1.9;
+    font-size: 14px;
+    margin: 13px 0;
+}
+
+.script {
+    font-family: 'Great Vibes', cursive;
+    font-size: 40px;
+    color: #dca6ba;
+    margin-bottom: 15px;
+}
+
+.date {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 29px;
+    letter-spacing: 5px;
+    color: #dca6ba;
+    margin: 20px 0;
+}
+
+button {
+    border: 1px solid #a66a7f;
+    background: linear-gradient(135deg, #60283e, #35182c);
+    color: #fff0f4;
+    padding: 13px 25px;
+    border-radius: 30px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    margin: 10px 5px;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: translateY(-3px);
+    background: linear-gradient(135deg, #87435c, #4b2440);
+    box-shadow: 0 5px 20px #a34c7066;
+}
+
+input {
+    width: 100%;
+    max-width: 300px;
+    padding: 14px;
+    border-radius: 30px;
+    border: 1px solid #87536a;
+    background: #0d0910;
+    color: white;
+    text-align: center;
+    outline: none;
+    margin: 18px 0;
+}
+
+input::placeholder {
+    color: #9f8792;
+}
+
+.message {
+    color: #e9a9bd;
+    min-height: 25px;
+    font-size: 13px;
+}
+
+.story-card {
+    max-width: 720px;
+    text-align: left;
+}
+
+.story-card h2 {
+    text-align: center;
+}
+
+.story-card p {
+    border-left: 1px solid #96566e;
+    padding-left: 15px;
+    margin: 20px 0;
+}
+
+.divider {
+    width: 70px;
+    height: 1px;
+    background: #b77b91;
+    margin: 25px auto;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    margin-top: 25px;
+}
+
+.photo-card {
+    background: #21141d;
+    border: 1px solid #75445a;
+    border-radius: 12px;
+    padding: 9px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.photo-card:hover {
+    transform: scale(1.03);
+}
+
+.photo-card img {
+    width: 100%;
+    height: 170px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.photo-card p {
+    margin: 8px 0 2px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 19px;
+    color: #e8b9c8;
+}
+
+#photoViewer {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: #050307f5;
+    z-index: 20;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 20px;
+}
+
+#photoViewer img {
+    max-width: 90%;
+    max-height: 70vh;
+    border-radius: 10px;
+    border: 1px solid #a66a7f;
+}
+
+.viewer-controls {
+    margin-top: 20px;
+}
+
+.letter {
+    text-align: left;
+}
+
+.letter p {
+    margin: 20px 0;
+}
+
+.proposal-title {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(40px, 10vw, 65px);
+    color: #e8a9bd;
+}
+
+#noBtn {
+    position: relative;
+}
+
+#noMessage {
+    color: #dca6ba;
+    min-height: 30px;
+    margin-top: 10px;
+}
+
+#proposalMessage {
+    color: #f0b6c9;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 25px;
+    margin-top: 20px;
+}
+
+.floating {
+    position: fixed;
+    bottom: -30px;
+    color: #a94e70;
+    opacity: 0.5;
+    pointer-events: none;
+    animation: floatUp 8s linear forwards;
+    z-index: 0;
+}
+
+@keyframes floatUp {
+    to {
+        transform: translateY(-110vh) rotate(35deg);
+        opacity: 0;
+    }
+}
+
+@media(max-width: 500px) {
+    .card {
+        padding: 30px 19px;
+    }
+
+    .gallery {
+        gap: 9px;
+    }
+
+    .photo-card img {
+        height: 130px;
+    }
+
+    p {
+        font-size: 13px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="stars"></div>
+
+<!-- PASSWORD PAGE -->
+<section id="passwordPage" class="page active">
+    <div class="card">
+        <div class="script">Our Secret Universe</div>
+        <h1>Our Little Universe</h1>
+        <div class="divider"></div>
+        <p>A little world made just for us.</p>
+        <p>Hint: The day we became US</p>
+
+        <input type="password" id="passwordInput" placeholder="Enter our special date">
+
+        <br>
+        <button onclick="checkPassword()">Unlock Our Story</button>
+        <p class="message" id="passwordMessage"></p>
+    </div>
+</section>
+
+<!-- ANNIVERSARY PAGE -->
+<section id="anniversaryPage" class="page">
+    <div class="card">
+        <p class="script">A beautiful beginning</p>
+        <h1>Our First Meeting Anniversary</h1>
+        <div class="date">30 • 10 • 2021</div>
+        <h3>Five Years of Our Beginning</h3>
+
+        <div class="divider"></div>
+
+        <p>Five years ago, on this very day, two strangers started talking without knowing how special they would become to each other.</p>
+
+        <p>Abhi, if I could go back to that day, I would still choose to start that first conversation with you.</p>
+
+        <p>That little beginning gave me so many beautiful memories, countless smiles, and someone who became one of the most precious parts of my life.</p>
+
+        <p>Today, October 30, 2026, I'm still grateful that our story began. Five years later, here we are, carrying so many memories in our hearts.</p>
+
+        <div class="divider"></div>
+
+        <h2>Happy 5th First-Meeting Anniversary to Us!</h2>
+
+        <p>Our story started with a simple conversation… and I hope we have many more chapters to write together.</p>
+
+        <button onclick="showPage('envelopePage')">Continue to Our Story</button>
+    </div>
+</section>
+
+<!-- ENVELOPE PAGE -->
+<section id="envelopePage" class="page">
+    <div class="card">
+        <p class="script">A letter from my heart</p>
+        <h1>For My Abhi</h1>
+        <div class="divider"></div>
+        <p>Every little memory has a place in my heart.</p>
+        <p>Are you ready to open our little universe?</p>
+        <button onclick="showPage('story1')">Open This</button>
+    </div>
+</section>
+
+<!-- STORY 1 -->
+<section id="story1" class="page">
+    <div class="card story-card">
+        <p class="script">Chapter One</p>
+        <h2>The Beginning</h2>
+        <div class="divider"></div>
+
+        <p>It all began on October 30, 2021, during the COVID days. I was in class 9, and neither of us knew how important that first conversation would become.</p>
+
+        <p>We started talking and decided to become best friends. You were shy about talking to girls, and I still remember our first call.</p>
+
+        <p>When school reopened, you saw me, but I didn't recognise you. I even waited to hear your name during attendance, but there were two Abhis in class!</p>
+
+        <p>We were shy in person, so we continued talking through messages when we got home.</p>
+
+        <div class="divider"></div>
+        <center>
+            <button onclick="showPage('envelopePage')">Back</button>
+            <button onclick="showPage('story2')">Next Chapter</button>
+        </center>
+    </div>
+</section>
+
+<!-- STORY 2 -->
+<section id="story2" class="page">
+    <div class="card story-card">
+        <p class="script">Chapter Two</p>
+        <h2>Becoming Us</h2>
+        <div class="divider"></div>
+
+        <p>Slowly, you became someone very special to me. I used to feel jealous when you talked to other girls, and sometimes we fought over little things.</p>
+
+        <p>You confessed your feelings first. At first, I said no because I was afraid of losing our friendship. But you didn't give up on me.</p>
+
+        <p>Finally, on February 23, 2023, we became US.</p>
+
+        <p>Even when we were only friends, I would miss you so much when you didn't come to class.</p>
+
+        <p>I still remember our first kiss on a special class day. It was unexpected and a memory I'll always treasure.</p>
+
+        <div class="divider"></div>
+        <center>
+            <button onclick="showPage('story1')">Previous</button>
+            <button onclick="showPage('story3')">Next Chapter</button>
+        </center>
+    </div>
+</section>
+
+<!-- STORY 3 -->
+<section id="story3" class="page">
+    <div class="card story-card">
+        <p class="script">Chapter Three</p>
+        <h2>Little Memories</h2>
+        <div class="divider"></div>
+
+        <p>I'll never forget our class 10 farewell, when I secretly put a sweet in your mouth without anyone noticing. It was our little moment.</p>
+
+        <p>We hoped we could study together in +1. We visited a school and submitted our forms. That day, you held my hand, something I had secretly wished for.</p>
+
+        <p>We couldn't attend the same school, but we still found ways to see each other in the evenings.</p>
+
+        <p>I remember you running towards me during a break and asking for my hand. When you held it and looked at me, my heart felt so full.</p>
+
+        <p>And when you suddenly rested your head on my shoulder, my heart beat so fast. Those little moments mean so much.</p>
+
+        <div class="divider"></div>
+        <center>
+            <button onclick="showPage('story2')">Previous</button>
+            <button onclick="showPage('story4')">Next Chapter</button>
+        </center>
+    </div>
+</section>
+
+<!-- STORY 4 -->
+<section id="story4" class="page">
+    <div class="card story-card">
+        <p class="script">Chapter Four</p>
+        <h2>Through Everything</h2>
+        <div class="divider"></div>
+
+        <p>Our journey hasn't always been easy. Sometimes we fought over little things, and sometimes I was afraid of the problems our relationship might bring.</p>
+
+        <p>Even when things became difficult, you comforted me. We faced misunderstandings, family worries, and times when we couldn't talk to each other.</p>
+
+        <p>We even hoped to study together in college, but things didn't work out the way we wanted. After some silence, we found our way back to each other.</p>
+
+        <p>That silence helped me understand how much I love you and how much our relationship means to me.</p>
+
+        <p>My happiest memories are the ones where you were there. Even on difficult days, being with you made me happy. You're one of the most precious gifts life has given me.</p>
+
+        <div class="divider"></div>
+        <center>
+            <button onclick="showPage('story3')">Previous</button>
+            <button onclick="showPage('galleryPage')">Our Memories</button>
+        </center>
+    </div>
+</section>
+
+<!-- GALLERY -->
+<section id="galleryPage" class="page">
+    <div class="card">
+        <p class="script">Moments frozen in time</p>
+        <h1>Our Little Memories</h1>
+        <p>Tap each photo to open it.</p>
+
+        <div class="gallery">
+            <div class="photo-card" onclick="openPhoto(0)">
+                <img src="photo1.jpg" alt="Memory 1">
+                <p>Memory 1</p>
+            </div>
+
+            <div class="photo-card" onclick="openPhoto(1)">
+                <img src="photo2.jpg" alt="Memory 2">
+                <p>Memory 2</p>
+            </div>
+
+            <div class="photo-card" onclick="openPhoto(2)">
+                <img src="photo3.jpg" alt="Memory 3">
+                <p>Memory 3</p>
+            </div>
+
+            <div class="photo-card" onclick="openPhoto(3)">
+                <img src="photo4.jpg" alt="Memory 4">
+                <p>Memory 4</p>
+            </div>
+
+            <div class="photo-card" onclick="openPhoto(4)">
+                <img src="photo5.jpg" alt="Memory 5">
+                <p>Memory 5</p>
+            </div>
+
+            <div class="photo-card" onclick="openPhoto(5)">
+                <img src="photo6.jpg" alt="Memory 6">
+                <p>Memory 6</p>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+        <button onclick="showPage('story4')">Back</button>
+        <button onclick="showPage('letterPage')">Read My Letter</button>
+    </div>
+</section>
+
+<!-- PHOTO VIEWER -->
+<div id="photoViewer">
+    <img id="largePhoto" src="" alt="Our memory">
+    <div class="viewer-controls">
+        <button onclick="previousPhoto()">Previous</button>
+        <button onclick="closePhoto()">Close</button>
+        <button onclick="nextPhoto()">Next</button>
+    </div>
+</div>
+
+<!-- LETTER -->
+<section id="letterPage" class="page">
+    <div class="card letter">
+        <p class="script">A few words from my heart</p>
+        <h1>My Dearest Abhi</h1>
+        <div class="divider"></div>
+
+        <p>If I could explain what you mean to me, I would need more than a thousand words.</p>
+
+        <p>From our first conversation to all the memories we've created, every little moment has become a part of my story.</p>
+
+        <p>Thank you for being patient with me, for comforting me when I was scared, and for finding your way back to me through our difficult days.</p>
+
+        <p>I know we aren't perfect. We may misunderstand each other sometimes, but I hope we keep learning to listen, understand, forgive, and care for each other.</p>
+
+        <p>I want more conversations, more silly fights that end in understanding, more memories, more smiles, and more beautiful days with you.</p>
+
+        <p>You will always be a beautiful part of my story.</p>
+
+        <div class="divider"></div>
+
+        <p class="script">With all my love,</p>
+        <h2>Your favourite person</h2>
+
+        <center>
+            <button onclick="showPage('galleryPage')">Back</button>
+            <button onclick="showPage('proposalPage')">One Last Thing</button>
+        </center>
+    </div>
+</section>
+
+<!-- PROPOSAL -->
+<section id="proposalPage" class="page">
+    <div class="card">
+        <p class="script">And our story continues...</p>
+        <h1>Abhi...</h1>
+        <div class="divider"></div>
+
+        <div class="proposal-title">Will You Keep Choosing Me?</div>
+
+        <p>Through every new chapter, every happy moment, and every challenge, shall we keep choosing to understand and care for each other?</p>
+
+        <button onclick="sayYes()">YES, ALWAYS!</button>
+        <button id="noBtn" onclick="moveNo()">Maybe later</button>
+
+        <p id="noMessage"></p>
+        <p id="proposalMessage"></p>
+
+        <button onclick="showPage('letterPage')">Back to Letter</button>
+    </div>
+</section>
+
+<script>
+const PASSWORD = "23022023";
+
+function showPage(pageId) {
+    document.querySelectorAll(".page").forEach(page => {
+        page.classList.remove("active");
+    });
+
+    document.getElementById(pageId).classList.add("active");
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+function checkPassword() {
+    const entered = document.getElementById("passwordInput").value;
+    const message = document.getElementById("passwordMessage");
+
+    if (entered === PASSWORD) {
+        message.textContent = "Welcome to our little universe...";
+        setTimeout(() => showPage("anniversaryPage"), 700);
+    } else {
+        message.textContent = "That's not our special date. Try again.";
+    }
+}
+
+document.getElementById("passwordInput").addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        checkPassword();
+    }
+});
+
+// PHOTO GALLERY
+const photos = [
+    "photo1.jpg",
+    "photo2.jpg",
+    "photo3.jpg",
+    "photo4.jpg",
+    "photo5.jpg",
+    "photo6.jpg"
+];
+
+let currentPhoto = 0;
+
+function openPhoto(index) {
+    currentPhoto = index;
+    updatePhoto();
+
+    document.getElementById("photoViewer").style.display = "flex";
+}
+
+function updatePhoto() {
+    document.getElementById("largePhoto").src = photos[currentPhoto];
+}
+
+function previousPhoto() {
+    currentPhoto = (currentPhoto - 1 + photos.length) % photos.length;
+    updatePhoto();
+}
+
+function nextPhoto() {
+    currentPhoto = (currentPhoto + 1) % photos.length;
+    updatePhoto();
+}
+
+function closePhoto() {
+    document.getElementById("photoViewer").style.display = "none";
+}
+
+// PROPOSAL BUTTON
+function sayYes() {
+    document.getElementById("proposalMessage").textContent =
+        "Here's to more beautiful chapters, more understanding, and more memories together.";
+
+    document.getElementById("noMessage").textContent = "";
+
+    createHearts(20);
+}
+
+const messages = [
+    "Hehe, you can't catch me!",
+    "Abhi, think again!",
+    "A little YES, please?",
+    "Our story has so many chapters left!",
+    "Hehe, I'm over here now!",
+    "One tiny YES would be so cute!",
+    "Don't be shy, Abhi!",
+    "Our next memory is waiting for us!",
+    "Try catching me!",
+    "There's more love to share!",
+    "Are you sure, Abhi?",
+    "Just imagine all our future memories!",
+    "Oops! Wrong button!",
+    "Our little universe needs you!",
+    "Maybe YES is the magic word?"
+];
+
+function moveNo() {
+    const button = document.getElementById("noBtn");
+    const message = document.getElementById("noMessage");
+
+    const maxX = window.innerWidth - button.offsetWidth - 30;
+    const maxY = window.innerHeight - button.offsetHeight - 30;
+
+    button.style.position = "fixed";
+    button.style.left = Math.max(10, Math.random() * maxX) + "px";
+    button.style.top = Math.max(10, Math.random() * maxY) + "px";
+
+    message.textContent = messages[Math.floor(Math.random() * messages.length)];
+}
+
+// FLOATING PARTICLES
+function createHearts(count) {
+    for (let i = 0; i < count; i++) {
+        const heart = document.createElement("div");
+
+        heart.className = "floating";
+        heart.textContent = "♥";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = (12 + Math.random() * 18) + "px";
+        heart.style.animationDuration = (5 + Math.random() * 5) + "s";
+
+        document.body.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 10000);
+    }
+}
+
+setInterval(() => createHearts(1), 1800);
+</script>
+
+</body>
+</html>
